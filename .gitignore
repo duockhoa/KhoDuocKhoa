@@ -68,3 +68,30 @@ frontend/dist/
 *.local
 *.cache
 .cache/
+
+# Mobile app (React Native)
+mobileapp/node_modules/
+mobileapp/.expo/
+mobileapp/.expo-shared/
+mobileapp/.gradle/
+mobileapp/.vscode/
+
+# Android build/gradle
+mobileapp/android/.gradle/
+mobileapp/android/app/build/
+mobileapp/android/build/
+mobileapp/android/local.properties
+
+# iOS / CocoaPods / Xcode
+mobileapp/ios/Pods/
+mobileapp/ios/build/
+mobileapp/ios/DerivedData/
+mobileapp/ios/*.xcworkspace
+mobileapp/ios/*.xcuserdata/
+mobileapp/ios/*.xcuserstate
+
+# Keystore and logs
+mobileapp/*.keystore
+mobileapp/*.log
+mobileapp/*.p12
+
