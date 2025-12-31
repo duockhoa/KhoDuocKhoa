@@ -19,7 +19,6 @@ export default function LoginPage() {
     password: z.string().min(6).max(50),
   });
 
-  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -28,10 +27,8 @@ export default function LoginPage() {
     },
   });
 
-  // 2. Define a submit handler.
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
   }
 
@@ -98,15 +95,18 @@ export default function LoginPage() {
         <div>
           <h3 className="text-center p-4 pb-0">
             Bạn chưa có tài khoản?
-            <a href="/register">Đăng ký</a>
+            <a href="/register" className="text-blue-500 px-2">Đăng ký</a>
           </h3>
         </div>
         <div className="text-center">
-          <a href="/forgot-password">Lấy lại mật khẩu</a>
+          <a href="/forgot-password" className="text-blue-500 hover:underline ">Lấy lại mật khẩu</a>
         </div>
         <div className="text-center text-sm text-gray-500 mt-4">
-          Đăng nhập đồng nghĩa với đã đồng ý .điều khoản và chính sách .của
-          chúng tôi
+          Đăng nhập đồng nghĩa với đã đồng ý 
+          <a href="/terms" className="text-blue-500 hover:underline px-2 ">
+          Điều khoản và chính sách 
+          </a>
+           của chúng tôi
         </div>
       </div>
     </div>
