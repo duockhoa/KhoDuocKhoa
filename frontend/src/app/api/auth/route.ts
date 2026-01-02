@@ -23,7 +23,7 @@ export async function POST(request: Request) {
         "Set-Cookie": [
           `accessToken=${accessToken}; Path=/; HttpOnly; SameSite=Lax`,
           refreshToken
-            ? `refreshToken=${refreshToken}; Path=/; HttpOnly; SameSite=Lax ; Max-Age=${refreshMaxAge}`
+            ? `refreshToken=${refreshToken}; Path=/; HttpOnly; SameSite=Lax ; Max-Age=${refreshMaxAge} ;domain =${process.env.NEXT_PUBLIC_COOKIE_DOMAIN}`
             : "",
         ]
           .filter(Boolean)
