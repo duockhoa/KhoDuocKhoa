@@ -14,9 +14,12 @@ import { z } from "zod";
 import { login } from "@/services/auth";
 import { setCookie } from "@/services/setcookie";
 import { useTokens } from "@/store/token.store";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function LoginForm() {
   const { setTokens } = useTokens();
+  const router = useRouter();
   const formSchema = z.object({
     username: z.string().min(2).max(50),
     password: z.string().min(6).max(50),
@@ -37,8 +40,11 @@ export default function LoginForm() {
       await setCookie({ accessToken, refreshToken });
       if (accessToken && refreshToken) {
         setTokens(accessToken, refreshToken);
+        router.replace("/home");
+        router.refresh();
       }
     } catch (error) {
+      toast.error("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
       console.error("Login failed:", error);
     }
   }
