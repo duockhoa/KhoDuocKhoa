@@ -1,5 +1,59 @@
 "use client";
-import { useContext, createContext, useState } from "react";
+import { useContext, createContext, useEffect, useState } from "react";
+
+type TokenCache = {
+  accessToken: string | null;
+  refreshToken: string | null;
+};
+
+const TOKEN_CACHE_KEY = "token-cache";
+
+const loadTokenCache = (): TokenCache => {
+  if (typeof window === "undefined") {
+    return { accessToken: null, refreshToken: null };
+  }
+  try {
+    const raw = sessionStorage.getItem(TOKEN_CACHE_KEY);
+    if (!raw) {
+      return { accessToken: null, refreshToken: null };
+    }
+    const parsed = JSON.parse(raw) as Partial<TokenCache>;
+    return {
+      accessToken: parsed.accessToken ?? null,
+      refreshToken: parsed.refreshToken ?? null,
+    };
+  } catch {
+    return { accessToken: null, refreshToken: null };
+  }
+};
+
+const persistTokenCache = (cache: TokenCache) => {
+  if (typeof window === "undefined") {
+    return;
+  }
+  if (!cache.accessToken && !cache.refreshToken) {
+    sessionStorage.removeItem(TOKEN_CACHE_KEY);
+    return;
+  }
+  sessionStorage.setItem(TOKEN_CACHE_KEY, JSON.stringify(cache));
+};
+
+let tokenCache: TokenCache = loadTokenCache();
+
+export const getTokenCache = () => tokenCache;
+
+export const setTokenCache = (
+  accessToken: string | null,
+  refreshToken: string | null
+) => {
+  tokenCache = { accessToken, refreshToken };
+  persistTokenCache(tokenCache);
+};
+
+export const clearTokenCache = () => {
+  tokenCache = { accessToken: null, refreshToken: null };
+  persistTokenCache(tokenCache);
+};
 
 type TokenContextType = {
   accessToken: string | null;
@@ -31,9 +85,14 @@ export const TokenProvider = ({
     initalToken.refreshToken
   );
   const setTokens = (accessToken: string, refreshToken: string) => {
+    setTokenCache(accessToken, refreshToken);
     setAccessToken(accessToken);
     setRefreshToken(refreshToken);
   };
+
+  useEffect(() => {
+    setTokenCache(accessToken, refreshToken);
+  }, [accessToken, refreshToken]);
 
   return (
     <TokenContext.Provider value={{ accessToken, refreshToken, setTokens }}>

@@ -13,8 +13,10 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { login } from "@/services/auth";
 import { setCookie } from "@/services/setcookie";
+import { useTokens } from "@/store/token.store";
 
 export default function LoginForm() {
+  const { setTokens } = useTokens();
   const formSchema = z.object({
     username: z.string().min(2).max(50),
     password: z.string().min(6).max(50),
@@ -33,6 +35,9 @@ export default function LoginForm() {
       const response = await login(values.username, values.password);
       const { accessToken, refreshToken } = response;
       await setCookie({ accessToken, refreshToken });
+      if (accessToken && refreshToken) {
+        setTokens(accessToken, refreshToken);
+      }
     } catch (error) {
       console.error("Login failed:", error);
     }
