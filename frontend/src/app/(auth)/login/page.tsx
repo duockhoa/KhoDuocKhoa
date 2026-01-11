@@ -7,8 +7,8 @@ export default function LoginPage() {
         <Image
           src={"/dkpharmalogo.png"}
           alt="Logo"
-          width={180}
-          height={70}
+          width={175}
+          height={75}
           className="m-auto p-4"
         />
         <h1 className="text-2xl font-bold mb-4 text-center">

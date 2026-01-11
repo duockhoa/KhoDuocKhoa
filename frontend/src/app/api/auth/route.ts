@@ -1,3 +1,4 @@
+const httpOnly = process.env.NODE_ENV === "production" ? "HttpOnly" : "";
 export async function POST(request: Request) {
   const payload = await request.json();
   const accessToken = payload?.accessToken || null;
@@ -26,9 +27,9 @@ export async function POST(request: Request) {
       status: 200,
       headers: {
         "Set-Cookie": [
-          `accessToken=${accessToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${accessMaxAge}${domainSegment}${secureSegment}`,
+          `accessToken=${accessToken}; Path=/; ${httpOnly}; SameSite=Lax; Max-Age=${accessMaxAge}${domainSegment}${secureSegment}`,
           refreshToken
-            ? `refreshToken=${refreshToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${refreshMaxAge}${domainSegment}${secureSegment}`
+            ? `refreshToken=${refreshToken}; Path=/; ${httpOnly}; SameSite=Lax; Max-Age=${refreshMaxAge}${domainSegment}${secureSegment}`
             : "",
         ]
           .filter(Boolean)
@@ -48,8 +49,8 @@ export async function DELETE() {
       status: 200,
       headers: {
         "Set-Cookie": [
-          `accessToken=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0${domainSegment}${secureSegment}`,
-          `refreshToken=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0${domainSegment}${secureSegment}`,
+          `accessToken=; Path=/; ${httpOnly}; SameSite=Lax; Max-Age=0${domainSegment}${secureSegment}`,
+          `refreshToken=; Path=/; ${httpOnly}; SameSite=Lax; Max-Age=0${domainSegment}${secureSegment}`,
         ].join(", "),
       },
     }
