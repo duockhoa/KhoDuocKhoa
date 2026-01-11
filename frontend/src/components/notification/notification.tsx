@@ -37,6 +37,7 @@ export default function Notification({
             {content.length === 0 && (
               <DropdownMenuItem>Không có thông báo mới</DropdownMenuItem>
             )}
+            
           </div>
         </DropdownMenuContent>
       </DropdownMenu>

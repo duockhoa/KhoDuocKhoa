@@ -12,15 +12,9 @@ export const login = async (username: string, password: string) => {
   }
 };
 
-export const logout = async (accessToken?: string) => {
+export const logout = async () => {
   try {
-    if (accessToken) {
-      await axios.delete("/auth/logout", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-    }
+    await axios.delete("/auth/logout");
   } catch (error) {
     throw error;
   }
