@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useLogout } from "@/hooks/use-logout";
-import { LogOut, User, Settings } from "lucide-react";
+import { LogOut, User, Settings, LayoutGrid } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function UserCard({ user }: { user: object }) {
@@ -43,7 +43,15 @@ export default function UserCard({ user }: { user: object }) {
             }}
           >
             <User className="mr-2 h-4 w-4" />
-            Profile
+            Hồ sơ cá nhân
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              router.push("/applications");
+            }}
+          >
+            <LayoutGrid className="mr-2 h-4 w-4" />
+            Tất cả ứng dụng
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={async () => {

@@ -9,7 +9,7 @@ export default function Search() {
       <Input
         type="text"
         placeholder="Tìm kiếm"
-        className="rounded-full"
+        className="rounded-full w-40 focus:w-100 focus:ring-0 focus-visible:ring-0 transition-all duration-300 ease-in-out pr-8"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />

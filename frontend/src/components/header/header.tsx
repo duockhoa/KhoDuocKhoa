@@ -2,6 +2,7 @@ import Image from "next/image";
 import UserCard from "../user-card/user-card";
 import Notification from "../notification/notification";
 import Search from "../search/search";
+
 export default function Header() {
   return (
     <header className="flex items-center justify-between p-2 bg-white px-4 border-b border-gray-200 h-[60px]">
@@ -12,6 +13,7 @@ export default function Header() {
           width={140}
           height={60}
           className="p-4"
+          onClick={() => {}}
         />
 
         <h1 className="text-xl ">Kho Dược Khoa</h1>
