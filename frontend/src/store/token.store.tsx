@@ -59,6 +59,7 @@ type TokenContextType = {
   accessToken: string | null;
   refreshToken: string | null;
   setTokens: (accessToken: string, refreshToken: string) => void;
+  clearTokens: () => void;
 };
 
 const TokenContext = createContext<TokenContextType | undefined>(undefined);
@@ -89,13 +90,20 @@ export const TokenProvider = ({
     setAccessToken(accessToken);
     setRefreshToken(refreshToken);
   };
+  const clearTokens = () => {
+    clearTokenCache();
+    setAccessToken(null);
+    setRefreshToken(null);
+  };
 
   useEffect(() => {
     setTokenCache(accessToken, refreshToken);
   }, [accessToken, refreshToken]);
 
   return (
-    <TokenContext.Provider value={{ accessToken, refreshToken, setTokens }}>
+    <TokenContext.Provider
+      value={{ accessToken, refreshToken, setTokens, clearTokens }}
+    >
       {children}
     </TokenContext.Provider>
   );

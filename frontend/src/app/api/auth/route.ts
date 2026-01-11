@@ -38,6 +38,24 @@ export async function POST(request: Request) {
   );
 }
 
+export async function DELETE() {
+  const cookieDomain = process.env.NEXT_PUBLIC_COOKIE_DOMAIN;
+  const domainSegment = cookieDomain ? `; Domain=${cookieDomain}` : "";
+  const secureSegment = process.env.NODE_ENV === "production" ? "; Secure" : "";
+  return Response.json(
+    { ok: true },
+    {
+      status: 200,
+      headers: {
+        "Set-Cookie": [
+          `accessToken=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0${domainSegment}${secureSegment}`,
+          `refreshToken=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0${domainSegment}${secureSegment}`,
+        ].join(", "),
+      },
+    }
+  );
+}
+
 const getAccessTokenMaxAge = (token: string, fallbackSeconds: number) => {
   try {
     const [, payloadBase64] = token.split(".");

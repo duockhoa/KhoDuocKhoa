@@ -11,3 +11,22 @@ export const login = async (username: string, password: string) => {
     throw error;
   }
 };
+
+export const logout = async (accessToken?: string) => {
+  try {
+    if (accessToken) {
+      await axios.delete("/auth/logout", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+    }
+  } catch (error) {
+    throw error;
+  }
+  try {
+    await fetch("/api/auth", { method: "DELETE" });
+  } catch (error) {
+    throw error;
+  }
+};
